@@ -8,6 +8,16 @@ function updateChannel(channelId, decimalId, hexId, byteColorId) {
         }
     });
 
+    // Update pair labels
+    const pairs = document.querySelectorAll(`#${channelId} .switch-pair`);
+    pairs.forEach(pair => {
+        const inputs = pair.querySelectorAll('input');
+        const label = pair.querySelector('.pair-label');
+        const first = inputs[0].checked ? '1' : '0';
+        const second = inputs[1].checked ? '1' : '0';
+        label.textContent = `${first}${second}`;
+    });
+
     document.getElementById(decimalId).textContent = value;
     const hex = value.toString(16).padStart(2, '0').toUpperCase();
     document.getElementById(hexId).textContent = hex;

@@ -33,16 +33,24 @@ h1 {
     justify-content: center;
 }
 
+.switch-group {
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
 .switches {
     display: flex;
     justify-content: space-between;
     width: 400px;
-    margin-right: 10px;
 }
 
 .switch-pair {
     display: flex;
     gap: 2px;
+    position: relative;
 }
 
 .switch {
@@ -80,12 +88,23 @@ h1 {
     color: #fff;
 }
 
-.switch input:checked + span::before {
-    content: "ON";
+.pair-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    pointer-events: none;
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px 5px;
+    border-radius: 3px;
 }
 
-.switch input:not(:checked) + span::before {
-    content: "OFF";
+.switch input:checked + span ~ .pair-label,
+.switch input:not(:checked) + span ~ .pair-label {
+    color: #000;
 }
 
 .byte-color {
