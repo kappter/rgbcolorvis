@@ -1,0 +1,114 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24Bit RGB Color Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>24Bit RGB Color Explained</h1>
+
+        <!-- Red Channel -->
+        <div class="channel">
+            <div class="switches" id="red-switches">
+                <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+            </div>
+            <div>1 Byte Red</div>
+            <div class="values">Red Decimal Value = <span id="red-decimal">0</span></div>
+            <div class="values">Red Hex Value = <span id="red-hex">00</span></div>
+        </div>
+
+        <!-- Green Channel -->
+        <div class="channel">
+            <div class="switches" id="green-switches">
+                <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+            </div>
+            <div>1 Byte Green</div>
+            <div class="values">Green Decimal Value = <span id="green-decimal">0</span></div>
+            <div class="values">Green Hex Value = <span id="green-hex">00</span></div>
+        </div>
+
+        <!-- Blue Channel -->
+        <div class="channel">
+            <div class="switches" id="blue-switches">
+                <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+            </div>
+            <div>1 Byte Blue</div>
+            <div class="values">Blue Decimal Value = <span id="blue-decimal">0</span></div>
+            <div class="values">Blue Hex Value = <span id="blue-hex">00</span></div>
+        </div>
+
+        <!-- Mixed Values and Color Preview -->
+        <div class="values">Mixed HEX Value = <span id="mixed-hex">000000</span></div>
+        <div class="values">Mixed RGB Value Visualized Below = <span id="mixed-rgb">0,0,0</span></div>
+        <div class="color-box" id="color-box"></div>
+        <div class="pixel-preview">
+            <div class="pixel" id="pixel"></div>
+            <span>1 pixel of 24Bit color...</span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
