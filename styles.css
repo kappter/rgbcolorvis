@@ -27,11 +27,22 @@ h1 {
     margin-bottom: 15px;
 }
 
+.channel-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .switches {
     display: flex;
     justify-content: space-between;
-    width: 450px;
-    margin: 0 auto 5px;
+    width: 400px;
+    margin-right: 10px;
+}
+
+.switch-pair {
+    display: flex;
+    gap: 2px;
 }
 
 .switch {
@@ -75,6 +86,13 @@ h1 {
 
 .switch input:not(:checked) + span::before {
     content: "OFF";
+}
+
+.byte-color {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #000;
+    background-color: #000;
 }
 
 .channel-label {

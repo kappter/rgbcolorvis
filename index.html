@@ -51,15 +51,26 @@
 
         <!-- Red Channel -->
         <div class="channel">
-            <div class="switches" id="red-switches">
-                <label class="switch"><input type="checkbox" data-bit="7" checked><span>ON</span></label>
-                <label class="switch"><input type="checkbox" data-bit="6" checked><span>ON</span></label>
-                <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+            <div class="channel-header">
+                <div class="switches" id="red-switches">
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="7" checked><span>ON</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="6" checked><span>ON</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+                    </div>
+                </div>
+                <div class="byte-color" id="red-byte-color"></div>
             </div>
             <div class="channel-label">1 Byte Red</div>
             <div class="values">Red Decimal Value = <span id="red-decimal">192</span></div>
@@ -68,15 +79,26 @@
 
         <!-- Green Channel -->
         <div class="channel">
-            <div class="switches" id="green-switches">
-                <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+            <div class="channel-header">
+                <div class="switches" id="green-switches">
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+                    </div>
+                </div>
+                <div class="byte-color" id="green-byte-color"></div>
             </div>
             <div class="channel-label">1 Byte Green</div>
             <div class="values">Green Decimal Value = <span id="green-decimal">0</span></div>
@@ -85,15 +107,26 @@
 
         <!-- Blue Channel -->
         <div class="channel">
-            <div class="switches" id="blue-switches">
-                <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+            <div class="channel-header">
+                <div class="switches" id="blue-switches">
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="2"><span>OFF</span></label>
+                    </div>
+                    <div class="switch-pair">
+                        <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
+                        <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
+                    </div>
+                </div>
+                <div class="byte-color" id="blue-byte-color"></div>
             </div>
             <div class="channel-label">1 Byte Blue</div>
             <div class="values">Blue Decimal Value = <span id="blue-decimal">0</span></div>
