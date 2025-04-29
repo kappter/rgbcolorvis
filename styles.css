@@ -86,15 +86,11 @@ h1 {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-    color: #000;
     transition: background 0.3s;
 }
 
 .switch input:checked + span {
     background: linear-gradient(to bottom, #000 50%, #fff 50%);
-    color: #fff;
 }
 
 .bit-states {
@@ -154,7 +150,7 @@ h1 {
     height: 50px;
     border: 2px solid #000;
     margin: 5px auto;
-    background-color: rgb(130, 160, 96);
+    background-color: rgb(198, 175, 96);
 }
 
 .pixel-preview {
