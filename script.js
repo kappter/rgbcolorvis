@@ -43,6 +43,14 @@ function updateColor() {
 
     const colorBox = document.getElementById('color-box');
     colorBox.style.backgroundColor = `rgb(${red},${green},${blue})`;
+
+    // Calculate and display complementary color
+    const compRed = 255 - red;
+    const compGreen = 255 - green;
+    const compBlue = 255 - blue;
+    document.getElementById('complementary-rgb').textContent = `${compRed},${compGreen},${compBlue}`;
+    const compSwatch = document.getElementById('complementary-swatch');
+    compSwatch.style.backgroundColor = `rgb(${compRed},${compGreen},${compBlue})`;
 }
 
 function resetAll() {

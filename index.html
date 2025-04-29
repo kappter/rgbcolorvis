@@ -184,6 +184,79 @@
         <div class="pixel-preview">
             <span>1 pixel of 24Bit color...</span>
         </div>
+
+        <!-- Color Reference Section -->
+        <div class="color-reference">
+            <h2>Color Reference</h2>
+            <div class="complementary-color">
+                <p>Complementary Color (Opposite): <span id="complementary-rgb">57,80,159</span></p>
+                <div class="complementary-swatch" id="complementary-swatch"></div>
+            </div>
+            <h3>Color Components</h3>
+            <p><strong>Red (R):</strong> Intensity of red light, typically ranging from 0 to 255 in 8-bit systems.</p>
+            <p><strong>Green (G):</strong> Intensity of green light, also ranging from 0 to 255.</p>
+            <p><strong>Blue (B):</strong> Intensity of blue light, ranging from 0 to 255.</p>
+            <p>Each component contributes to the final color by combining in various intensities.</p>
+
+            <h3>Additive Color Model</h3>
+            <p>RGB is based on an additive color system, where colors are created by adding different intensities of red, green, and blue light. For example:</p>
+            <ul>
+                <li>(255, 255, 255) = White (full intensity of all components).</li>
+                <li>(0, 0, 0) = Black (no intensity).</li>
+                <li>(255, 0, 0) = Pure Red.</li>
+            </ul>
+
+            <h3>Bit Depth</h3>
+            <p>Determines the number of possible values for each RGB component. Common bit depths include:</p>
+            <ul>
+                <li><strong>8-bit per channel:</strong> 256 levels per component, resulting in 16.7 million colors (256 × 256 × 256).</li>
+                <li><strong>10-bit or higher:</strong> Used in high-dynamic-range displays for smoother gradients and more colors.</li>
+            </ul>
+
+            <h3>Color Space</h3>
+            <p>RGB values are interpreted within a specific color space, which defines the range of colors (gamut) that can be represented. Common RGB color spaces include:</p>
+            <ul>
+                <li><strong>sRGB:</strong> Standard for web and consumer displays.</li>
+                <li><strong>Adobe RGB:</strong> Wider gamut for professional photography and printing.</li>
+                <li><strong>DCI-P3:</strong> Used in modern displays for richer colors.</li>
+            </ul>
+
+            <h3>Gamma Correction</h3>
+            <p>RGB values are often gamma-corrected to adjust for human perception and display characteristics. This non-linear transformation ensures that colors appear correctly on screens.</p>
+
+            <h3>Alpha Channel (RGBA)</h3>
+            <p>An optional fourth component, Alpha, represents transparency (0 = fully transparent, 255 = fully opaque). RGBA extends RGB for applications like image compositing.</p>
+
+            <h3>Hexadecimal Representation</h3>
+            <p>RGB colors are often expressed in hexadecimal format for web design, e.g., #FF0000 for pure red, where each pair of digits represents the intensity of R, G, and B.</p>
+
+            <h3>Color Mixing and Perception</h3>
+            <p>RGB relies on the human eye’s perception of light, where combinations of red, green, and blue stimulate cone cells to produce various colors. For example:</p>
+            <ul>
+                <li>(255, 255, 0) = Yellow (red + green).</li>
+                <li>(0, 255, 255) = Cyan (green + blue).</li>
+            </ul>
+
+            <h3>Applications</h3>
+            <p><strong>Displays:</strong> Monitors, TVs, and smartphone screens use RGB subpixels to render colors.</p>
+            <p><strong>Image Formats:</strong> Formats like PNG, JPEG, and BMP store pixel data in RGB or related models.</p>
+            <p><strong>Web Design:</strong> CSS uses RGB (e.g., rgb(255, 0, 0)) or hex codes for styling.</p>
+            <p><strong>Graphics Programming:</strong> APIs like OpenGL and WebGL use RGB for rendering.</p>
+
+            <h3>Conversion to Other Models</h3>
+            <p>RGB can be converted to other color models for different use cases:</p>
+            <ul>
+                <li><strong>HSL/HSV:</strong> Hue, Saturation, Lightness/Value, useful for intuitive color manipulation.</li>
+                <li><strong>CMYK:</strong> Cyan, Magenta, Yellow, Black, used in printing (subtractive model).</li>
+                <li><strong>Lab:</strong> Perceptually uniform color space for color analysis.</li>
+            </ul>
+
+            <h3>Dynamic Range</h3>
+            <p>In modern displays, RGB is used in high-dynamic-range (HDR) formats, where higher bit depths (e.g., 10-bit or 12-bit) and wider color gamuts (e.g., Rec. 2020) allow for more vibrant and realistic colors.</p>
+
+            <h3>Normalization</h3>
+            <p>In some contexts, RGB values are normalized to a range of 0 to 1 (e.g., in graphics programming) instead of 0 to 255, making calculations easier.</p>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
