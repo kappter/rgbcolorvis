@@ -49,4 +49,20 @@ document.querySelectorAll('.switch input').forEach(switchEl => {
     switchEl.addEventListener('change', updateColor);
 });
 
+// Copy RGB Value Button
+document.getElementById('copy-rgb-btn').addEventListener('click', () => {
+    const rgbValue = document.getElementById('mixed-rgb').textContent;
+    navigator.clipboard.writeText(rgbValue).then(() => {
+        const button = document.getElementById('copy-rgb-btn');
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        setTimeout(() => {
+            button.textContent = 'Copy RGB Value';
+            button.classList.remove('copied');
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+});
+
 updateColor();
