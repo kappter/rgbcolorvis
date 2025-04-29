@@ -3,16 +3,16 @@ body {
     background-color: #f0f0f0;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 10px;
     margin: 0;
 }
 
 .container {
     background-color: #d3d3d3;
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
     border: 2px solid #000;
-    width: 550px;
+    width: 500px;
     text-align: center;
     box-sizing: border-box;
 }
@@ -20,11 +20,11 @@ body {
 h1 {
     font-size: 24px;
     font-weight: bold;
-    margin: 0 0 15px 0;
+    margin: 0 0 10px 0;
 }
 
 .channel {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .channel-header {
@@ -36,34 +36,34 @@ h1 {
 .switch-group {
     border: 2px solid #000;
     border-radius: 5px;
-    padding: 5px;
+    padding: 3px;
     background-color: #d3d3d3;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 .bit-values {
     display: flex;
     justify-content: space-between;
-    width: 400px;
-    margin-bottom: 5px;
+    width: 360px;
+    margin-bottom: 3px;
 }
 
 .bit-values span {
-    width: 50px;
+    width: 45px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
 }
 
 .switches {
     display: flex;
     justify-content: space-between;
-    width: 400px;
+    width: 360px;
 }
 
 .switch {
     position: relative;
-    width: 50px;
+    width: 45px;
     height: 60px;
     display: inline-block;
 }
@@ -76,97 +76,71 @@ h1 {
 
 .switch span {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
-    height: 50%;
-    background-color: #fff;
+    bottom: 0;
+    background: linear-gradient(to bottom, #fff 50%, #000 50%);
     border: 2px solid #000;
-    border-top: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
+    color: #000;
+    transition: background 0.3s;
 }
 
 .switch input:checked + span {
-    background-color: #000;
+    background: linear-gradient(to bottom, #000 50%, #fff 50%);
     color: #fff;
-}
-
-.switch input:checked + span::before {
-    content: "ON";
-}
-
-.switch input:not(:checked) + span::before {
-    content: "OFF";
 }
 
 .bit-states {
     display: flex;
     justify-content: space-between;
-    width: 400px;
-    margin-top: 5px;
+    width: 360px;
+    margin-top: 3px;
 }
 
 .bit-states span {
-    width: 50px;
+    width: 45px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
 }
 
 .byte-color {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border: 2px solid #000;
     background-color: #000;
 }
 
 .channel-label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .values {
-    font-size: 16px;
-    margin: 5px 0;
+    font-size: 14px;
+    margin: 3px 0;
 }
 
 .color-box {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 50px;
     border: 2px solid #000;
-    margin: 10px auto;
-    background-color: rgb(180, 0, 0);
+    margin: 5px auto;
+    background-color: rgb(130, 160, 96);
 }
 
 .pixel-preview {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-.pixel-wrapper {
-    width: 20px;
-    height: 20px;
-    background-color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
-
-.pixel {
-    width: 1px;
-    height: 1px;
-    transform: scale(10);
-    transform-origin: center;
-    background-color: rgb(180, 0, 0);
+    margin: 5px 0;
+    font-size: 14px;
 }

@@ -42,10 +42,7 @@ function updateColor() {
     document.getElementById('mixed-rgb').textContent = `${red},${green},${blue}`;
 
     const colorBox = document.getElementById('color-box');
-    const pixel = document.getElementById('pixel');
-    const color = `rgb(${red},${green},${blue})`;
-    colorBox.style.backgroundColor = color;
-    pixel.style.backgroundColor = color;
+    colorBox.style.backgroundColor = `rgb(${red},${green},${blue})`;
 }
 
 document.querySelectorAll('.switch input').forEach(switchEl => {
