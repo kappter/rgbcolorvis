@@ -52,8 +52,8 @@
         <!-- Red Channel -->
         <div class="channel">
             <div class="switches" id="red-switches">
-                <label class="switch"><input type="checkbox" data-bit="7"><span>OFF</span></label>
-                <label class="switch"><input type="checkbox" data-bit="6"><span>OFF</span></label>
+                <label class="switch"><input type="checkbox" data-bit="7" checked><span>ON</span></label>
+                <label class="switch"><input type="checkbox" data-bit="6" checked><span>ON</span></label>
                 <label class="switch"><input type="checkbox" data-bit="5"><span>OFF</span></label>
                 <label class="switch"><input type="checkbox" data-bit="4"><span>OFF</span></label>
                 <label class="switch"><input type="checkbox" data-bit="3"><span>OFF</span></label>
@@ -61,9 +61,9 @@
                 <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
                 <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
             </div>
-            <div>1 Byte Red</div>
-            <div class="values">Red Decimal Value = <span id="red-decimal">0</span></div>
-            <div class="values">Red Hex Value = <span id="red-hex">00</span></div>
+            <div class="channel-label">1 Byte Red</div>
+            <div class="values">Red Decimal Value = <span id="red-decimal">192</span></div>
+            <div class="values">Red HEX Value = <span id="red-hex">C0</span></div>
         </div>
 
         <!-- Green Channel -->
@@ -78,7 +78,7 @@
                 <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
                 <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
             </div>
-            <div>1 Byte Green</div>
+            <div class="channel-label">1 Byte Green</div>
             <div class="values">Green Decimal Value = <span id="green-decimal">0</span></div>
             <div class="values">Green Hex Value = <span id="green-hex">00</span></div>
         </div>
@@ -95,17 +95,19 @@
                 <label class="switch"><input type="checkbox" data-bit="1"><span>OFF</span></label>
                 <label class="switch"><input type="checkbox" data-bit="0"><span>OFF</span></label>
             </div>
-            <div>1 Byte Blue</div>
+            <div class="channel-label">1 Byte Blue</div>
             <div class="values">Blue Decimal Value = <span id="blue-decimal">0</span></div>
-            <div class="values">Blue Hex Value = <span id="blue-hex">00</span></div>
+            <div class="values">Blue HEX Value = <span id="blue-hex">00</span></div>
         </div>
 
         <!-- Mixed Values and Color Preview -->
-        <div class="values">Mixed HEX Value = <span id="mixed-hex">000000</span></div>
-        <div class="values">Mixed RGB Value Visualized Below = <span id="mixed-rgb">0,0,0</span></div>
+        <div class="values">Mixed HEX Value = <span id="mixed-hex">C00000</span></div>
+        <div class="values">Mixed RGB Value Visualized Below = <span id="mixed-rgb">192,0,0</span></div>
         <div class="color-box" id="color-box"></div>
         <div class="pixel-preview">
-            <div class="pixel" id="pixel"></div>
+            <div class="pixel-wrapper">
+                <div class="pixel" id="pixel"></div>
+            </div>
             <span>1 pixel of 24Bit color...</span>
         </div>
     </div>

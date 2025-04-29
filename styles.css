@@ -4,37 +4,40 @@ body {
     display: flex;
     justify-content: center;
     padding: 20px;
+    margin: 0;
 }
 
 .container {
     background-color: #d3d3d3;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    border: 2px solid #333;
-    width: 600px;
+    border: 2px solid #000;
+    width: 550px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 h1 {
     font-size: 24px;
-    margin-bottom: 20px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
 }
 
 .channel {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .switches {
     display: flex;
     justify-content: space-between;
-    width: 400px;
-    margin: 0 auto;
+    width: 450px;
+    margin: 0 auto 5px;
 }
 
 .switch {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     display: inline-block;
 }
 
@@ -51,12 +54,13 @@ h1 {
     right: 0;
     bottom: 0;
     background-color: #fff;
-    border: 1px solid #000;
+    border: 2px solid #000;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: bold;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -73,11 +77,10 @@ h1 {
     content: "OFF";
 }
 
-.color-box {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #000;
-    margin: 10px auto;
+.channel-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .values {
@@ -85,19 +88,36 @@ h1 {
     margin: 5px 0;
 }
 
+.color-box {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #000;
+    margin: 10px auto;
+    background-color: rgb(192, 0, 0);
+}
+
 .pixel-preview {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px auto;
+    margin: 10px 0;
     font-size: 16px;
+}
+
+.pixel-wrapper {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .pixel {
     width: 1px;
     height: 1px;
-    transform: scale(20);
-    transform-origin: top left;
-    border: 1px solid #000;
-    margin-right: 10px;
+    transform: scale(10);
+    transform-origin: center;
+    background-color: rgb(192, 0, 0);
 }
