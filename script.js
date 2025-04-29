@@ -45,6 +45,14 @@ function updateColor() {
     colorBox.style.backgroundColor = `rgb(${red},${green},${blue})`;
 }
 
+function resetAll() {
+    const allSwitches = document.querySelectorAll('.switch input');
+    allSwitches.forEach(switchEl => {
+        switchEl.checked = false;
+    });
+    updateColor();
+}
+
 document.querySelectorAll('.switch input').forEach(switchEl => {
     switchEl.addEventListener('change', updateColor);
 });
@@ -64,5 +72,8 @@ document.getElementById('copy-rgb-btn').addEventListener('click', () => {
         console.error('Failed to copy: ', err);
     });
 });
+
+// Reset Button
+document.getElementById('reset-btn').addEventListener('click', resetAll);
 
 updateColor();
