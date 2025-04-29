@@ -8,14 +8,10 @@ function updateChannel(channelId, decimalId, hexId, byteColorId) {
         }
     });
 
-    // Update pair labels
-    const pairs = document.querySelectorAll(`#${channelId} .switch-pair`);
-    pairs.forEach(pair => {
-        const inputs = pair.querySelectorAll('input');
-        const label = pair.querySelector('.pair-label');
-        const first = inputs[0].checked ? '1' : '0';
-        const second = inputs[1].checked ? '1' : '0';
-        label.textContent = `${first}${second}`;
+    // Update bit states
+    const bitStates = document.querySelectorAll(`#${channelId} ~ .bit-states span`);
+    switches.forEach((switchEl, index) => {
+        bitStates[index].textContent = switchEl.checked ? '1' : '0';
     });
 
     document.getElementById(decimalId).textContent = value;

@@ -37,8 +37,22 @@ h1 {
     border: 2px solid #000;
     border-radius: 5px;
     padding: 5px;
-    background-color: #fff;
+    background-color: #d3d3d3;
     margin-right: 10px;
+}
+
+.bit-values {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin-bottom: 5px;
+}
+
+.bit-values span {
+    width: 50px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .switches {
@@ -47,16 +61,10 @@ h1 {
     width: 400px;
 }
 
-.switch-pair {
-    display: flex;
-    gap: 2px;
-    position: relative;
-}
-
 .switch {
     position: relative;
     width: 50px;
-    height: 50px;
+    height: 60px;
     display: inline-block;
 }
 
@@ -68,12 +76,13 @@ h1 {
 
 .switch span {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: 50%;
     background-color: #fff;
     border: 2px solid #000;
+    border-top: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,23 +97,26 @@ h1 {
     color: #fff;
 }
 
-.pair-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    font-weight: bold;
-    pointer-events: none;
-    color: #000;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 2px 5px;
-    border-radius: 3px;
+.switch input:checked + span::before {
+    content: "ON";
 }
 
-.switch input:checked + span ~ .pair-label,
-.switch input:not(:checked) + span ~ .pair-label {
-    color: #000;
+.switch input:not(:checked) + span::before {
+    content: "OFF";
+}
+
+.bit-states {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin-top: 5px;
+}
+
+.bit-states span {
+    width: 50px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .byte-color {
@@ -130,7 +142,7 @@ h1 {
     height: 150px;
     border: 2px solid #000;
     margin: 10px auto;
-    background-color: rgb(192, 0, 0);
+    background-color: rgb(180, 0, 0);
 }
 
 .pixel-preview {
@@ -156,5 +168,5 @@ h1 {
     height: 1px;
     transform: scale(10);
     transform-origin: center;
-    background-color: rgb(192, 0, 0);
+    background-color: rgb(180, 0, 0);
 }
