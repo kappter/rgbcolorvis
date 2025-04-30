@@ -208,5 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('randomize-btn').addEventListener('click', randomizeColor);
 
-    updateColorDisplay();
+    // Randomize color on page load
+    randomizeColor();
 });
