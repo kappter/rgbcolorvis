@@ -1,38 +1,3 @@
-function updateChannel(channelId, decimalId, hexId, byteColorId) {
-    const switches = document.querySelectorAll(`#${channelId} .switch input`);
-    let value = 0;
-    switches.forEach(switchEl => {
-        const bit = parseInt(switchEl.dataset.bit);
-        if (switchEl.checked) {
-            value += Math.pow(2, bit);
-        }
-    });
-
-    // Update bit states
-    const bitStates = document.querySelectorAll(`#${channelId} ~ .bit-states span`);
-    switches.forEach((switchEl, index) => {
-        bitStates[index].textContent = switchEl.checked ? '1' : '0';
-    });
-
-    document.getElementById(decimalId).textContent = value;
-    const hex = value.toString(16).padStart(2, '0').toUpperCase();
-    document.getElementById(hexId).textContent = hex;
-
-    // Update individual byte color
-    let rgb;
-    if (channelId === 'red-switches') {
-        rgb = `rgb(${value}, 0, 0)`;
-    } else if (channelId === 'green-switches') {
-        rgb = `rgb(0, ${value}, 0)`;
-    } else {
-        rgb = `rgb(0, 0, ${value})`;
-    }
-    document.getElementById(byteColorId).style.backgroundColor = rgb;
-
-    return value;
-}
-
-// RGB to HSL conversion
 function rgbToHsl(r, g, b) {
     r /= 255;
     g /= 255;
@@ -42,7 +7,7 @@ function rgbToHsl(r, g, b) {
     let h, s, l = (max + min) / 2;
 
     if (max === min) {
-        h = s = 0; // achromatic
+        h = s = 0;
     } else {
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -53,11 +18,9 @@ function rgbToHsl(r, g, b) {
         }
         h /= 6;
     }
-
-    return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+    return [h * 360, s * 100, l * 100];
 }
 
-// HSL to RGB conversion
 function hslToRgb(h, s, l) {
     h /= 360;
     s /= 100;
@@ -65,127 +28,169 @@ function hslToRgb(h, s, l) {
     let r, g, b;
 
     if (s === 0) {
-        r = g = b = l; // achromatic
+        r = g = b = l;
     } else {
         const hue2rgb = (p, q, t) => {
             if (t < 0) t += 1;
             if (t > 1) t -= 1;
-            if (t < 1 / 6) return p + (q - p) * 6 * t;
-            if (t < 1 / 2) return q;
-            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            if (t < 1/6) return p + (q - p) * 6 * t;
+            if (t < 1/2) return q;
+            if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
             return p;
         };
         const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
         const p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1 / 3);
+        r = hue2rgb(p, q, h + 1/3);
         g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1 / 3);
+        b = hue2rgb(p, q, h - 1/3);
     }
-
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-// Determine color temperature
-function getColorTemperature(h) {
-    if (h >= 0 && h <= 60 || h >= 300 && h <= 360) return 'Warm';
-    if (h >= 120 && h <= 240) return 'Cool';
-    return 'Neutral';
+function calculateColorRules(r, g, b, rule) {
+    const [h, s, l] = rgbToHsl(r, g, b);
+    const colors = [];
+
+    switch (rule) {
+        case 'complementary':
+            colors.push(hslToRgb((h + 180) % 360, s, l));
+            colors.push(hslToRgb((h + 180) % 360, s, l));
+            colors.push([r, g, b]);
+            colors.push(hslToRgb((h + 180) % 360, s, l));
+            colors.push(hslToRgb((h + 180) % 360, s, l));
+            break;
+        case 'analogous':
+            colors.push(hslToRgb((h - 30 + 360) % 360, s, l));
+            colors.push(hslToRgb((h - 15 + 360) % 360, s, l));
+            colors.push([r, g, b]);
+            colors.push(hslToRgb((h + 15) % 360, s, l));
+            colors.push(hslToRgb((h + 30) % 360, s, l));
+            break;
+        case 'shades':
+            colors.push(hslToRgb(h, s, Math.max(l - 20, 0)));
+            colors.push(hslToRgb(h, s, Math.max(l - 10, 0)));
+            colors.push([r, g, b]);
+            colors.push(hslToRgb(h, s, Math.max(l - 5, 0)));
+            colors.push(hslToRgb(h, s, Math.max(l - 2.5, 0)));
+            break;
+        case 'tints':
+            colors.push(hslToRgb(h, s, Math.min(l + 20, 100)));
+            colors.push(hslToRgb(h, s, Math.min(l + 10, 100)));
+            colors.push([r, g, b]);
+            colors.push(hslToRgb(h, s, Math.min(l + 5, 100)));
+            colors.push(hslToRgb(h, s, Math.min(l + 2.5, 100)));
+            break;
+        case 'triadic':
+            colors.push(hslToRgb((h - 120 + 360) % 360, s, l));
+            colors.push(hslToRgb((h - 120 + 360) % 360, s, l));
+            colors.push([r, g, b]);
+            colors.push(hslToRgb((h + 120) % 360, s, l));
+            colors.push(hslToRgb((h + 120) % 360, s, l));
+            break;
+    }
+    return colors;
 }
 
-// Get analogous colors
-function getAnalogousColors(h, s, l) {
-    const h1 = (h + 30) % 360;
-    const h2 = (h - 30 + 360) % 360;
-    return [
-        hslToRgb(h1, s, l),
-        hslToRgb(h2, s, l)
-    ];
+function updateColorRuleDisplay(r, g, b) {
+    const rule = document.getElementById('color-rule').value;
+    const colors = calculateColorRules(r, g, b, rule);
+    for (let i = 1; i <= 5; i++) {
+        const box = document.getElementById(`color-rule-box-${i}`);
+        const [cr, cg, cb] = colors[i - 1];
+        box.style.backgroundColor = `rgb(${cr}, ${cg}, ${cb})`;
+    }
 }
 
-// Randomize switch states
-function randomizeColor() {
-    const channels = ['red-switches', 'green-switches', 'blue-switches'];
-    channels.forEach(channelId => {
-        const switches = document.querySelectorAll(`#${channelId} .switch input`);
-        switches.forEach(switchEl => {
-            switchEl.checked = Math.random() > 0.5; // Randomly set switch to on or off
-        });
+function calculateChannelValue(switches) {
+    let value = 0;
+    switches.forEach(input => {
+        if (input.checked) {
+            value += Math.pow(2, parseInt(input.dataset.bit));
+        }
     });
-    updateColor();
+    return value;
 }
 
-function updateColor() {
-    const red = updateChannel('red-switches', 'red-decimal', 'red-hex', 'red-byte-color');
-    const green = updateChannel('green-switches', 'green-decimal', 'green-hex', 'green-byte-color');
-    const blue = updateChannel('blue-switches', 'blue-decimal', 'blue-hex', 'blue-byte-color');
+function updateChannel(channel, switches, decimalSpan, hexSpan, byteColor) {
+    const value = calculateChannelValue(switches);
+    decimalSpan.textContent = value;
+    hexSpan.textContent = value.toString(16).padStart(2, '0').toUpperCase();
+    byteColor.style.backgroundColor = channel === 'red' ? `rgb(${value}, 0, 0)` :
+                                    channel === 'green' ? `rgb(0, ${value}, 0)` :
+                                    `rgb(0, 0, ${value})`;
+    return value;
+}
 
-    const mixedHex = `${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}`.toUpperCase();
-    document.getElementById('mixed-hex').textContent = mixedHex;
-    document.getElementById('mixed-rgb').textContent = `${red},${green},${blue}`;
+function updateBitStates(switches, bitStates) {
+    switches.forEach((input, index) => {
+        bitStates[index].textContent = input.checked ? '1' : '0';
+    });
+}
 
-    const colorBox = document.getElementById('color-box');
-    colorBox.style.backgroundColor = `rgb(${red},${green},${blue})`;
+function updateColorDisplay() {
+    const redSwitches = document.querySelectorAll('#red-switches input');
+    const greenSwitches = document.querySelectorAll('#green-switches input');
+    const blueSwitches = document.querySelectorAll('#blue-switches input');
 
-    // Update color name using ntc.js
-    const hexColor = `#${mixedHex}`;
-    const ntcMatch = ntc.name(hexColor);
-    const colorName = ntcMatch[1];
+    const red = updateChannel('red', redSwitches, document.getElementById('red-decimal'), document.getElementById('red-hex'), document.getElementById('red-byte-color'));
+    const green = updateChannel('green', greenSwitches, document.getElementById('green-decimal'), document.getElementById('green-hex'), document.getElementById('green-byte-color'));
+    const blue = updateChannel('blue', blueSwitches, document.getElementById('blue-decimal'), document.getElementById('blue-hex'), document.getElementById('blue-byte-color'));
+
+    updateBitStates(redSwitchesIrish, document.querySelectorAll('#red-switches ~ .bit-states span'));
+    updateBitStates(greenSwitches, document.querySelectorAll('#green-switches ~ .bit-states span'));
+    updateBitStates(blueSwitches, document.querySelectorAll('#blue-switches ~ .bit-states span'));
+
+    const hex = `${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}`.toUpperCase();
+    document.getElementById('mixed-hex').textContent = hex;
+    document.getElementById('mixed-rgb').textContent = `${red}, ${green}, ${blue}`;
+    document.getElementById('color-box').style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+
+    const [h, s, l] = rgbToHsl(red, green, blue);
+    document.getElementById('mixed-hsl').textContent = `${Math.round(h)}°, ${Math.round(s)}%, ${Math.round(l)}%`;
+
+    const colorTemperature = h < 90 || h > 270 ? 'Warm' : h < 180 ? 'Cool' : 'Neutral';
+    document.getElementById('color-temperature').textContent = colorTemperature;
+
+    const colorName = ntc.name(`#${hex}`)[1];
     document.getElementById('color-name').textContent = colorName;
 
-    // Update HSL values
-    const [h, s, l] = rgbToHsl(red, green, blue);
-    document.getElementById('mixed-hsl').textContent = `${h}°, ${s}%, ${l}%`;
+    const complementary = hslToRgb((h + 180) % 360, s, l);
+    document.getElementById('complementary-rgb').textContent = complementary.map(Math.round).join(', ');
+    document.getElementById('complementary-swatch').style.backgroundColor = `rgb(${complementary.join(', ')})`;
 
-    // Update color temperature
-    const temperature = getColorTemperature(h);
-    document.getElementById('color-temperature').textContent = temperature;
+    const analogous1 = hslToRgb((h - 30 + 360) % 360, s, l);
+    const analogous2 = hslToRgb((h + 30) % 360, s, l);
+    document.getElementById('analogous-swatch-1').style.backgroundColor = `rgb(${analogous1.join(', ')})`;
+    document.getElementById('analogous-swatch-2').style.backgroundColor = `rgb(${analogous2.join(', ')})`;
 
-    // Update analogous colors
-    const analogousColors = getAnalogousColors(h, s, l);
-    document.getElementById('analogous-swatch-1').style.backgroundColor = `rgb(${analogousColors[0][0]},${analogousColors[0][1]},${analogousColors[0][2]})`;
-    document.getElementById('analogous-swatch-2').style.backgroundColor = `rgb(${analogousColors[1][0]},${analogousColors[1][1]},${analogousColors[1][2]})`;
-
-    // Calculate and display complementary color
-    const compRed = 255 - red;
-    const compGreen = 255 - green;
-    const compBlue = 255 - blue;
-    document.getElementById('complementary-rgb').textContent = `${compRed},${compGreen},${compBlue}`;
-    const compSwatch = document.getElementById('complementary-swatch');
-    compSwatch.style.backgroundColor = `rgb(${compRed},${compGreen},${compBlue})`;
+    updateColorRuleDisplay(red, green, blue);
 }
 
-function resetAll() {
-    const allSwitches = document.querySelectorAll('.switch input');
-    allSwitches.forEach(switchEl => {
-        switchEl.checked = false;
-    });
-    updateColor();
-}
-
-// Initialize with random color on page load
 document.addEventListener('DOMContentLoaded', () => {
-    randomizeColor();
-});
-
-document.querySelectorAll('.switch input').forEach(switchEl => {
-    switchEl.addEventListener('change', updateColor);
-});
-
-// Copy RGB Value Button
-document.getElementById('copy-rgb-btn').addEventListener('click', () => {
-    const rgbValue = document.getElementById('mixed-rgb').textContent;
-    navigator.clipboard.writeText(rgbValue).then(() => {
-        const button = document.getElementById('copy-rgb-btn');
-        button.textContent = 'Copied!';
-        button.classList.add('copied');
-        setTimeout(() => {
-            button.textContent = 'Copy RGB Value';
-            button.classList.remove('copied');
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
+    const switches = document.querySelectorAll('.switches input');
+    switches.forEach(switchInput => {
+        switchInput.addEventListener('change', updateColorDisplay);
     });
-});
 
-// Reset Button
-document.getElementById('reset-btn').addEventListener('click', resetAll);
+    document.getElementById('color-rule').addEventListener('change', () => {
+        const red = calculateChannelValue(document.querySelectorAll('#red-switches input'));
+        const green = calculateChannelValue(document.querySelectorAll('#green-switches input'));
+        const blue = calculateChannelValue(document.querySelectorAll('#blue-switches input'));
+        updateColorRuleDisplay(red, green, blue);
+    });
+
+    document.getElementById('copy-rgb-btn').addEventListener('click', () => {
+        const rgb = document.getElementById('mixed-rgb').textContent;
+        navigator.clipboard.writeText(rgb);
+        alert('RGB value copied to clipboard!');
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+        switches.forEach(switchInput => {
+            switchInput.checked = false;
+        });
+        updateColorDisplay();
+    });
+
+    updateColorDisplay();
+});

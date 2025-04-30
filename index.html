@@ -200,14 +200,31 @@
                 <div class="analogous-swatch" id="analogous-swatch-1"></div>
                 <div class="analogous-swatch" id="analogous-swatch-2"></div>
             </div>
+            <div class="color-rule-selector">
+                <label for="color-rule">Color Rule: </label>
+                <select id="color-rule" class="color-rule-dropdown">
+                    <option value="complementary">Complementary</option>
+                    <option value="analogous">Analogous</option>
+                    <option value="shades">Shades</option>
+                    <option value="tints">Tints</option>
+                    <option value="triadic">Triadic</option>
+                </select>
+            </div>
+            <div class="color-rule-display">
+                <div class="color-rule-box" id="color-rule-box-1"></div>
+                <div class="color-rule-box" id="color-rule-box-2"></div>
+                <div class="color-rule-box" id="color-rule-box-3"></div>
+                <div class="color-rule-box" id="color-rule-box-4"></div>
+                <div class="color-rule-box" id="color-rule-box-5"></div>
+            </div>
             <h3>Color Components</h3>
             <p><strong>Red (R):</strong> Intensity of red light, typically ranging from 0 to 255 in 8-bit systems.</p>
             <p><strong>Green (G):</strong> Intensity of green light, also ranging from 0 to 255.</p>
             <p><strong>Blue (B):</strong> Intensity of blue light, ranging from 0 to 255.</p>
             <p>Each component contributes to the final color by combining in various intensities.</p>
-            <!-- Existing color reference content remains unchanged -->
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="ntc.js"></script>
     <script src="script.js"></script>
 </body>
