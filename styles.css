@@ -273,3 +273,17 @@ h1 {
     border: 1px solid var(--shadow-color);
     border-radius: 4px;
 }
+.randomize-btn {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    background-color: var(--accent-color);
+    color: var(--navbar-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.randomize-btn:hover {
+    background-color: var(--cell-hover);
+}
