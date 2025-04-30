@@ -127,6 +127,20 @@ function updateBitStates(switches, bitStates) {
     });
 }
 
+function randomizeColor() {
+    const redSwitches = document.querySelectorAll('#red-switches input');
+    const greenSwitches = document.querySelectorAll('#green-switches input');
+    const blueSwitches = document.querySelectorAll('#blue-switches input');
+
+    [redSwitches, greenSwitches, blueSwitches].forEach(switches => {
+        switches.forEach(input => {
+            input.checked = Math.random() > 0.5;
+        });
+    });
+
+    updateColorDisplay();
+}
+
 function updateColorDisplay() {
     const redSwitches = document.querySelectorAll('#red-switches input');
     const greenSwitches = document.querySelectorAll('#green-switches input');
@@ -136,7 +150,7 @@ function updateColorDisplay() {
     const green = updateChannel('green', greenSwitches, document.getElementById('green-decimal'), document.getElementById('green-hex'), document.getElementById('green-byte-color'));
     const blue = updateChannel('blue', blueSwitches, document.getElementById('blue-decimal'), document.getElementById('blue-hex'), document.getElementById('blue-byte-color'));
 
-    updateBitStates(redSwitchesIrish, document.querySelectorAll('#red-switches ~ .bit-states span'));
+    updateBitStates(redSwitches, document.querySelectorAll('#red-switches ~ .bit-states span'));
     updateBitStates(greenSwitches, document.querySelectorAll('#green-switches ~ .bit-states span'));
     updateBitStates(blueSwitches, document.querySelectorAll('#blue-switches ~ .bit-states span'));
 
@@ -191,6 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         updateColorDisplay();
     });
+
+    document.getElementById('randomize-btn').addEventListener('click', randomizeColor);
 
     updateColorDisplay();
 });
