@@ -244,3 +244,32 @@ h1 {
     border: 2px solid #000;
     background-color: rgb(57, 80, 159);
 }
+
+.color-rule-selector {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-rule-dropdown {
+    padding: 0.5rem;
+    background-color: var(--cell-bg);
+    color: var(--text-color);
+    border: 1px solid var(--shadow-color);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.color-rule-display {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.color-rule-box {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--shadow-color);
+    border-radius: 4px;
+}
