@@ -1,108 +1,71 @@
-/* CSS Variables for Theming */
-:root {
-    --background: #f5f5f5;
-    --text-color: #333;
-    --cell-bg: #ffffff;
-    --cell-hover: #e0e0e0;
-    --accent-color: #6b8e9f;
-    --navbar-text: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.2);
-}
-
-/* Dark Mode Variables */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #1a1a1a;
-        --text-color: #e0e0e0;
-        --cell-bg: #2a2a2a;
-        --cell-hover: #3a3a3a;
-        --accent-color: #6b8e9f;
-        --navbar-text: #ffffff;
-        --shadow-color: rgba(255, 255, 255, 0.2);
-    }
-}
-
-/* Reset and Base Styles */
-* {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
     margin: 0;
-    padding: 0;
+}
+
+.container {
+    background-color: #d3d3d3;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    width: 500px;
+    text-align: center;
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    background-color: var(--background);
-    color: var(--text-color);
-    line-height: 1.6;
-    padding: 1rem;
-}
-
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-/* Headings */
 h1 {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 2rem;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
 }
 
-h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-}
-
-/* Channel Section */
 .channel {
-    background-color: var(--cell-bg);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    margin-bottom: 10px;
 }
 
 .channel-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    justify-content: center;
 }
 
 .switch-group {
-    flex: 1;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: #d3d3d3;
+    margin-right: 8px;
 }
 
-.bit-values, .bit-states {
+.bit-values {
     display: flex;
     justify-content: space-between;
-    text-align: center;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
+    width: 360px;
+    margin-bottom: 3px;
 }
 
-.bit-values span, .bit-states span {
-    width: 12.5%;
+.bit-values span {
+    width: 45px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .switches {
     display: flex;
     justify-content: space-between;
+    width: 360px;
 }
 
 .switch {
     position: relative;
+    width: 45px;
+    height: 60px;
     display: inline-block;
-    width: 30px;
-    height: 16px;
 }
 
 .switch input {
@@ -113,199 +76,220 @@ h3 {
 
 .switch span {
     position: absolute;
-    cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
-    transition: background-color 0.3s;
-    border-radius: 16px;
+    background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+    border: 2px solid #666;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), inset 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.switch span:before {
+.switch span::before,
+.switch span::after {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
     position: absolute;
-    content: '';
-    height: 12px;
-    width: 12px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: transform 0.3s;
-    border-radius: 50%;
+    width: 100%;
+    text-align: center;
+}
+
+.switch span::before {
+    content: "OFF";
+    top: 5px;
+    color: #000;
+}
+
+.switch span::after {
+    content: "ON";
+    bottom: 5px;
+    color: #000;
+}
+
+.switch input:not(:checked) + span {
+    background: linear-gradient(to bottom, #e0e0e0 50%, #000 50%);
 }
 
 .switch input:checked + span {
-    background-color: var(--accent-color);
+    background: linear-gradient(to bottom, #000 50%, #e0e0e0 50%);
 }
 
-.switch input:checked + span:before {
-    transform: translateX(14px);
+.bit-states {
+    display: flex;
+    justify-content: space-between;
+    width: 360px;
+    margin-top: 3px;
+}
+
+.bit-states span {
+    width: 45px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .byte-color {
     width: 60px;
     height: 60px;
-    border: 2px solid var(--shadow-color); /* Add stroke */
-    border-radius: 4px;
+    border: 2px solid #000;
+    background-color: #000;
 }
 
 .channel-label {
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 3px;
 }
 
 .values {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+    font-size: 14px;
+    margin: 3px 0;
 }
 
-/* Mixed Values and Color Preview */
-.color-box {
-    width: 100%;
-    height: 100px;
-    margin: 1rem 0;
-    border: 2px solid var(--shadow-color); /* Add stroke */
-    border-radius: 4px;
-}
-
-.pixel-preview {
-    text-align: center;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-/* Buttons */
 .copy-btn, .reset-btn {
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    background-color: var(--accent-color);
-    color: var(--navbar-text);
-    border: none;
-    border-radius: 4px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
+    margin: 5px 5px;
+    transition: background-color 0.3s;
 }
 
 .copy-btn:hover, .reset-btn:hover {
-    background-color: var(--cell-hover);
+    background-color: #e0e0e0;
 }
 
-/* Color Reference Section */
+.copy-btn.copied {
+    background-color: #a0a0a0;
+}
+
+.color-box {
+    width: 200px;
+    height: 50px;
+    border: 2px solid #000;
+    margin: 5px auto;
+    background-color: rgb(198, 175, 96);
+}
+
+.pixel-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
 .color-reference {
-    background-color: var(--cell-bg);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    text-align: left;
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #e0e0e0;
 }
 
-.complementary-color, .analogous-colors {
-    margin-bottom: 1rem;
+.color-reference h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-.complementary-swatch, .analogous-swatch {
-    width: 60px;
-    height: 60px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 0.5rem;
-    border: 2px solid var(--shadow-color); /* Add stroke */
-    border-radius: 4px;
+.color-reference h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.color-reference p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.color-reference ul {
+    margin: 5px 0 10px 20px;
+    padding-left: 0;
+}
+
+.color-reference ul li {
+    font-size: 14px;
+    margin: 3px 0;
+}
+
+.complementary-color {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.complementary-color p {
+    margin-right: 10px;
+}
+
+.complementary-swatch {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #000;
+    background-color: rgb(57, 80, 159);
+}
+
+.analogous-colors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .analogous-swatch {
-    margin-right: 0.5rem;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #000; /* Add stroke */
+    margin: 0 5px;
 }
 
 .color-rule-selector {
-    margin: 1rem 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.color-rule-selector label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 .color-rule-dropdown {
-    padding: 0.5rem;
-    background-color: var(--cell-bg);
-    color: var(--text-color);
-    border: 1px solid var(--shadow-color);
-    border-radius: 4px;
+    padding: 5px;
+    font-size: 14px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
     cursor: pointer;
-    font-size: 1rem;
 }
 
 .color-rule-display {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
 }
 
 .color-rule-box {
-    width: 60px;
-    height: 60px;
-    border: 2px solid var(--shadow-color); /* Add stroke */
-    border-radius: 4px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 0.5rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .channel-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .byte-color {
-        margin-top: 1rem;
-    }
-
-    .switches {
-        flex-wrap: wrap;
-        gap: 0.25rem;
-    }
-
-    .switch {
-        width: 28px;
-    }
-
-    .color-box {
-        height: 80px;
-    }
-
-    .copy-btn, .reset-btn {
-        width: 100%;
-        margin: 0.25rem 0;
-    }
-
-    .color-rule-display {
-        flex-wrap: wrap;
-    }
-
-    .color-rule-box {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.25rem;
-    }
-
-    .values {
-        font-size: 0.9rem;
-    }
-
-    .color-rule-box, .complementary-swatch, .analogous-swatch, .byte-color {
-        width: 40px;
-        height: 40px;
-    }
+    width: 30px;
+    height: 30px;
+    border: 2px solid #000; /* Add stroke */
 }
