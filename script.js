@@ -94,6 +94,10 @@ function calculateColorRules(r, g, b, rule) {
     return colors;
 }
 
+function rgbToHex(r, g, b) {
+    return ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0').toUpperCase();
+}
+
 function updateColorRuleDisplay(r, g, b) {
     const rule = document.getElementById('color-rule').value;
     const colors = calculateColorRules(r, g, b, rule);
@@ -206,6 +210,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const hex = document.getElementById('mixed-hex').textContent;
         navigator.clipboard.writeText(hex);
         alert('HEX value copied to clipboard!');
+    });
+
+    document.getElementById('copy-all-hex-btn').addEventListener('click', () => {
+        const hexValues = [];
+        for (let i = 1; i <= 5; i++) {
+            const box = document.getElementById(`color-rule-box-${i}`);
+            const rgb = box.style.backgroundColor.match(/\d+/g).map(Number);
+            const hex = rgbToHex(rgb[0], rgb[1], rgb[2]);
+            hexValues.push(hex);
+        }
+        const hexString = hexValues.join(', ');
+        navigator.clipboard.writeText(hexString);
+        alert('All HEX values copied to clipboard!');
     });
 
     document.getElementById('reset-btn').addEventListener('click', () => {
