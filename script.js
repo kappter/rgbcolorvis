@@ -47,7 +47,7 @@ function hslToRgb(h, s, l) {
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-function calculate ColorRules(r, g, b, rule) {
+function calculateColorRules(r, g, b, rule) {
     const [h, s, l] = rgbToHsl(r, g, b);
     const colors = [];
 
