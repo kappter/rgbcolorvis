@@ -54,11 +54,11 @@ function calculateColorRules(r, g, b, rule) {
     switch (rule) {
         case 'complementary':
             const compH = (h + 180) % 360;
-            colors.push([r, g, b]); // Base color
-            colors.push(hslToRgb(compH, s, l)); // Complementary
-            colors.push(hslToRgb(compH, s, Math.max(l - 10, 0))); // Shade of complementary
-            colors.push(hslToRgb(compH, s, Math.min(l + 10, 100))); // Tint of complementary
-            colors.push(hslToRgb((compH + 10) % 360, s, l)); // Complementary with slight hue shift
+            colors.push([r, g, b]); // Slot 1: Base color
+            colors.push(hslToRgb(compH, s, l)); // Slot 2: Complementary
+            colors.push([r, g, b]); // Slot 3: Base color
+            colors.push(hslToRgb(compH, s, Math.max(l - 10, 0))); // Slot 4: Shade of complementary
+            colors.push([r, g, b]); // Slot 5: Base color
             break;
         case 'analogous':
             colors.push(hslToRgb((h - 30 + 360) % 360, s, l));
