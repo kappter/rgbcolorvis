@@ -37,6 +37,45 @@
         }
         return gk_fileData[filename] || "";
         }
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
         </script><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,8 +126,7 @@
                 <div class="byte-color" id="red-byte-color"></div>
             </div>
             <div class="channel-label">1 Byte Red</div>
-            <div class="values">Red Decimal Value = <span id="red-decimal">198</span></div>
-            <div class="values">Red HEX Value = <span id="red-hex">C6</span></div>
+            <div class="values">Red: Decimal <span id="red-decimal">198</span> | HEX <span id="red-hex">C6</span></div>
         </div>
 
         <!-- Green Channel -->
@@ -129,8 +167,7 @@
                 <div class="byte-color" id="green-byte-color"></div>
             </div>
             <div class="channel-label">1 Byte Green</div>
-            <div class="values">Green Decimal Value = <span id="green-decimal">175</span></div>
-            <div class="values">Green HEX Value = <span id="green-hex">AF</span></div>
+            <div class="values">Green: Decimal <span id="green-decimal">175</span> | HEX <span id="green-hex">AF</span></div>
         </div>
 
         <!-- Blue Channel -->
@@ -171,8 +208,7 @@
                 <div class="byte-color" id="blue-byte-color"></div>
             </div>
             <div class="channel-label">1 Byte Blue</div>
-            <div class="values">Blue Decimal Value = <span id="blue-decimal">96</span></div>
-            <div class="values">Blue HEX Value = <span id="blue-hex">60</span></div>
+            <div class="values">Blue: Decimal <span id="blue-decimal">96</span> | HEX <span id="blue-hex">60</span></div>
         </div>
 
         <!-- Mixed Values and Color Preview -->
@@ -181,6 +217,7 @@
         <div class="values">Mixed HSL Value = <span id="mixed-hsl">45°, 45%, 58%</span></div>
         <div class="values">Color Temperature = <span id="color-temperature">Warm</span></div>
         <button id="copy-rgb-btn" class="copy-btn">Copy RGB Value</button>
+        <button id="copy-hex-btn" class="copy-btn">Copy HEX Value</button>
         <button id="reset-btn" class="reset-btn">Reset</button>
         <button id="randomize-btn" class="copy-btn">Randomize</button>
         <div class="color-box" id="color-box"></div>
@@ -228,5 +265,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="ntc.js"></script>
     <script src="script.js"></script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'938fb61fde84afef',t:'MTc0NjEwNzA0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

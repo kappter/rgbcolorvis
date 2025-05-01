@@ -47,17 +47,18 @@ function hslToRgb(h, s, l) {
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
-function calculateColorRules(r, g, b, rule) {
+function calculate ColorRules(r, g, b, rule) {
     const [h, s, l] = rgbToHsl(r, g, b);
     const colors = [];
 
     switch (rule) {
         case 'complementary':
-            colors.push(hslToRgb((h + 180) % 360, s, l));
-            colors.push(hslToRgb((h + 180) % 360, s, l));
-            colors.push([r, g, b]);
-            colors.push(hslToRgb((h + 180) % 360, s, l));
-            colors.push(hslToRgb((h + 180) % 360, s, l));
+            const compH = (h + 180) % 360;
+            colors.push([r, g, b]); // Base color
+            colors.push(hslToRgb(compH, s, l)); // Complementary
+            colors.push(hslToRgb(compH, s, Math.max(l - 10, 0))); // Shade of complementary
+            colors.push(hslToRgb(compH, s, Math.min(l + 10, 100))); // Tint of complementary
+            colors.push(hslToRgb((compH + 10) % 360, s, l)); // Complementary with slight hue shift
             break;
         case 'analogous':
             colors.push(hslToRgb((h - 30 + 360) % 360, s, l));
@@ -81,11 +82,13 @@ function calculateColorRules(r, g, b, rule) {
             colors.push(hslToRgb(h, s, Math.min(l + 2.5, 100)));
             break;
         case 'triadic':
-            colors.push(hslToRgb((h - 120 + 360) % 360, s, l));
-            colors.push(hslToRgb((h - 120 + 360) % 360, s, l));
-            colors.push([r, g, b]);
-            colors.push(hslToRgb((h + 120) % 360, s, l));
-            colors.push(hslToRgb((h + 120) % 360, s, l));
+            const triad1 = (h - 120 + 360) % 360;
+            const triad2 = (h + 120) % 360;
+            colors.push([r, g, b]); // Base color
+            colors.push(hslToRgb(triad1, s, l)); // First triadic
+            colors.push(hslToRgb(triad2, s, l)); // Second triadic
+            colors.push(hslToRgb(triad1, s, Math.max(l - 10, 0))); // Shade of first triadic
+            colors.push(hslToRgb(triad2, s, Math.min(l + 10, 100))); // Tint of second triadic
             break;
     }
     return colors;
@@ -197,6 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const rgb = document.getElementById('mixed-rgb').textContent;
         navigator.clipboard.writeText(rgb);
         alert('RGB value copied to clipboard!');
+    });
+
+    document.getElementById('copy-hex-btn').addEventListener('click', () => {
+        const hex = document.getElementById('mixed-hex').textContent;
+        navigator.clipboard.writeText(hex);
+        alert('HEX value copied to clipboard!');
     });
 
     document.getElementById('reset-btn').addEventListener('click', () => {
