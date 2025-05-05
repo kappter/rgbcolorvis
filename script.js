@@ -188,9 +188,17 @@ function updateColorDisplay() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const switches = document.querySelectorAll('.switches input');
-    switches.forEach(switchInput => {
-        switchInput.addEventListener('change', updateColorDisplay);
+    const redSwitches = document.querySelectorAll('#red-switches input');
+    const greenSwitches = document.querySelectorAll('#green-switches input');
+    const blueSwitches = document.querySelectorAll('#blue-switches input');
+
+    [redSwitches, greenSwitches, blueSwitches].forEach((switchGroup, index) => {
+        switchGroup.forEach(switchInput => {
+            switchInput.addEventListener('change', () => {
+                console.log(`Switch changed in ${['red', 'green', 'blue'][index]}: bit ${switchInput.dataset.bit}`);
+                updateColorDisplay();
+            });
+        });
     });
 
     document.getElementById('color-rule').addEventListener('change', () => {
@@ -226,8 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('reset-btn').addEventListener('click', () => {
-        switches.forEach(switchInput => {
-            switchInput.checked = false;
+        [redSwitches, greenSwitches, blueSwitches].forEach(switchGroup => {
+            switchGroup.forEach(switchInput => {
+                switchInput.checked = false;
+            });
         });
         updateColorDisplay();
     });
